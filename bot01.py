@@ -68,7 +68,7 @@ async def leave(ctx):
 
 @client.event 
 async def on_message(message):
-    if message.content.casefold() == "fuck":
+    if message.content.casefold() == "nigga":
         await message.delete()
         await message.channel.send("that language is not allowed in this server!")
 
