@@ -6,12 +6,16 @@ from os import getenv
 from dotenv import load_dotenv
 load_dotenv()
 DISCORD_TOKEN = getenv('BOTKEY')
-# import requests
-# import json
+from discord import Member
+from discord.ext.commands import has_permissions, MissingPermissions
+import requests
+import json
+# import os
 
 
 intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 
 client = commands.Bot(command_prefix = '!', intents=discord.Intents.all()) 
 
@@ -71,5 +75,29 @@ async def on_message(message):
     if message.content.casefold() == "nigga":
         await message.delete()
         await message.channel.send("that language is not allowed in this server!")
+        await client.process_commands(message)
+
+@client.command()
+@has_permissions(kick_members=True)
+async def kick(ctx, member: discord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await ctx.send(f'user {member} has been kicked.')
+
+@kick.error
+async def kick_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("you don't have permission to kick people.")
+
+# @client.command()
+# @has_permissions(ban_members=True)
+# async def ban(ctx, member: discord.Member, *, reason=None):
+#     await member.ban(reason=reason)
+#     await ctx.send(f'user {member} has been banned.')
+
+# @ban.error
+# async def ban_error(ctx, error):
+#     if isinstance(error, commands.MissingPermissions):
+#         await ctx.send("you don't have permission to ban people.")
+
 
 client.run(DISCORD_TOKEN)
