@@ -1,0 +1,5 @@
+discord
+requests
+python-dotenv
+
+#pip install -r requirements.txt (to install all at once)
