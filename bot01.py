@@ -23,8 +23,9 @@ bot = commands.Bot(command_prefix = '!', intents=discord.Intents.all())
 
 @bot.event 
 async def on_ready(): 
+    await bot.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='NewJeans', url='https://www.youtube.com/watch?v=ft70sAYrFyY&ab_channel=HYBELABELS'))
     print("The bot is now ready for use!")
-    print("-----------------------------")
+    print("-----------------------------")  
 
 @bot.command()
 async def hello(ctx):
@@ -98,5 +99,13 @@ async def ban_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("you don't have permission to ban people.")
 
+@bot.command()
+async def embed(ctx):
+    embed = discord.Embed(title="dog", url="http://google.com", description="we love dogs", color=0x967bb6)
+    embed.set_author(name=ctx.author.display_name, url="http://google.com")
+    embed.add_field(name="shorkie", value="nico", inline=False)
+    embed.add_field(name="shorkie", value="chewy", inline=False)
+    embed.set_footer(text="thank you for reading")
+    await ctx.send(embed=embed)
 
 bot.run(DISCORD_TOKEN)
