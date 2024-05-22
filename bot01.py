@@ -135,4 +135,10 @@ async def embed(ctx):
     embed.set_footer(text="thank you for reading")
     await ctx.send(embed=embed)
 
+@bot.command()
+async def message(ctx, user:discord.Member, *, message=None):
+    message = "welcome to the server!"
+    embed = discord.Embed(title=message)
+    await user.send(embed=embed)
+
 bot.run(DISCORD_TOKEN)
