@@ -141,4 +141,19 @@ async def message(ctx, user:discord.Member, *, message=None):
     embed = discord.Embed(title=message)
     await user.send(embed=embed)
 
+# @bot.event
+# async def on_member_remove(member):
+#     channel = bot.get_channel(1218445506049478659)
+#     await channel.send('goodbye' + member + '!')
+
+@bot.event
+async def on_reaction_add(reaction, user):
+    channel = reaction.message.channel
+    await channel.send(user.name + " added: " + reaction.emoji)
+
+@bot.event
+async def on_reaction_remove(reaction, user):
+    channel = reaction.message.channel
+    await channel.send(user.name + " removed: " + reaction.emoji)
+    
 bot.run(DISCORD_TOKEN)
