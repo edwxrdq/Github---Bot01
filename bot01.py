@@ -100,6 +100,33 @@ async def ban_error(ctx, error):
         await ctx.send("you don't have permission to ban people.")
 
 @bot.command()
+@has_permissions(ban_members=True)
+async def unban(ctx, member: discord.Member, *, reason=None):
+    banned_users = await ctx.guild.bans()
+    print(banned_users)
+    member_name, member_discriminator = member.split("#")
+
+    for ban_entry in banned_users:
+        print(ban_entry)
+        user = ban_entry.user
+
+        if (user.name, user.discriminator) == (member_name, member_discriminator):
+            await ctx.guild.unban(user)
+            await ctx.send(f'unbanned {user.mention}.')
+    await member.ban(reason=reason)
+    await ctx.send(f'user {member} has been banned.')
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("you don't have permissions to run this command.")
+
+@unban.error
+async def unban_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("you don't have permissions to run this command.")
+
+@bot.command()
 async def embed(ctx):
     embed = discord.Embed(title="dog", url="http://google.com", description="we love dogs", color=0x967bb6)
     embed.set_author(name=ctx.author.display_name, url="http://google.com")
