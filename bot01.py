@@ -8,6 +8,7 @@ load_dotenv()
 DISCORD_TOKEN = getenv('BOTKEY')
 from discord import Member
 from discord.ext.commands import has_permissions, MissingPermissions
+from discord.utils import get
 import requests
 import json
 # import os
@@ -116,15 +117,15 @@ async def unban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'user {member} has been banned.')
 
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send("you don't have permissions to run this command.")
+# @bot.event
+# async def on_command_error(ctx, error):
+#     if isinstance(error, commands.MissingPermissions):
+#         await ctx.send("you don't have permissions to run this command.")
 
 @unban.error
 async def unban_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("you don't have permissions to run this command.")
+        await ctx.send("you don't have permission to unban people.")
 
 @bot.command()
 async def embed(ctx):
@@ -155,5 +156,33 @@ async def on_reaction_add(reaction, user):
 async def on_reaction_remove(reaction, user):
     channel = reaction.message.channel
     await channel.send(user.name + " removed: " + reaction.emoji)
+
+@bot.command(pass_context = True)
+@has_permissions(manage_roles = True)
+async def addRole(ctx, user : discord.Member, *, role : discord.Role):
+    if role in user.roles:
+        await ctx.send(f"{user.mention} already has this role.")
+    else:
+        await user.add_roles(role)
+        await ctx.send(f"{user.mention} has been added to the {role} role.")
+
+@addRole.error
+async def role_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("you don't have permissions to add roles.")
+
+@bot.command(pass_context = True)
+@has_permissions(manage_roles = True)
+async def removeRole(ctx, user : discord.Member, *, role : discord.Role):
+    if role in user.roles:
+        await user.remove_roles(role)
+        await ctx.send(f"removed {user.mention} from the {role} role.")
+    else:
+        await ctx.send(f"{user.mention} doesn't have the {role} role.")
+
+@removeRole.error
+async def removeRole_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("you don't have permissions to add roles.")
     
 bot.run(DISCORD_TOKEN)
