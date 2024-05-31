@@ -24,52 +24,43 @@ bot = commands.Bot(command_prefix = '!', intents=discord.Intents.all())
 
 @bot.event 
 async def on_ready(): 
-    await bot.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='NewJeans', url='https://www.youtube.com/watch?v=ft70sAYrFyY&ab_channel=HYBELABELS'))
-    print("The bot is now ready for use!")
-    print("-----------------------------")  
+    # await bot.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='NewJeans', url='https://www.youtube.com/watch?v=ft70sAYrFyY&ab_channel=HYBELABELS'))
+    print("bot has connected to the server!")
 
 @bot.command()
 async def hello(ctx):
-    await ctx.send("hello, i am the first bot.")
+    await ctx.send("hello, let's make some progress today!")
 
 @bot.command()
 async def goodbye(ctx):
-    await ctx.send("goodbye, have a great rest of the day!")
+    await ctx.send("goodbye, let's work harder next time!")
 
-#detects when user joins server, then runs the following
 @bot.event
 async def on_member_join(member):
-    await channel.send("someone has joined the server!")
-    # await channel.send(f"welcome to the server {member.mention}")
+    # await channel.send("someone has joined the server!")
+    await channel.send(f"{member.mention} has joined the server!")
     channel = bot.get_channel(1218445506049478659)
 
-
-#detects when user leaves server, then runs the following
 @bot.event
 async def on_member_remove(member):
     channel = bot.get_channel(1218445506049478659)
-    await channel.send("someone has left the server!")
-    # await channel.send(f'{member.mention} has left the server!')
+    # await channel.send("someone has left the server!")
+    await channel.send(f'{member.mention} has left the server!')
 
 @bot.command(pass_context = True)
 async def join(ctx):
-    #relies on user input
     if (ctx.author.voice):
         channel = ctx.message.author.voice.channel
         await channel.connect()
     else:
         await ctx.send("you must be in a voice channel to run this command.")
 
-
 @bot.command(pass_context = True)
 async def leave(ctx):
-    #if the bot is in a voice channel, it'll run the following command; disconnects then sends message in chat
     if (ctx.voice_client):
-        #guild = server, voice client = removes from the channel the bot's in
         await ctx.guild.voice_client.disconnect()
         await ctx.send("i've left the voice channel.")
     else:
-        #if bot isn't in a voice channel then it'll run this
         await ctx.send("i'm not in a voice channel.")
 
 @bot.listen('on_message')
@@ -184,5 +175,5 @@ async def removeRole(ctx, user : discord.Member, *, role : discord.Role):
 async def removeRole_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("you don't have permissions to add roles.")
-    
+
 bot.run(DISCORD_TOKEN)
