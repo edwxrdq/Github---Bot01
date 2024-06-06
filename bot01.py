@@ -32,7 +32,7 @@ bot.remove_command("help")
 async def on_ready(): 
     # await bot.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='NewJeans', url='https://www.youtube.com/watch?v=ft70sAYrFyY&ab_channel=HYBELABELS'))
     print("bot has connected to the server!")
-    await bot.add_cog(music_cog(bot))
+    # await bot.add_cog(music_cog(bot))
     await bot.add_cog(help_cog(bot))
 
 @bot.command()
