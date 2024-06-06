@@ -13,7 +13,8 @@ from discord.utils import get
 import requests
 import json
 # import os
-from cogs import music
+from music import music_cog
+from help import help_cog
 # from cogs import setup
 import youtube_dl
 import nacl
@@ -23,11 +24,7 @@ intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 
-
-# bot.remove_command("help")
-
-# bot.add_cog(help(bot))
-bot.add_cog(music(bot))
+bot.remove_command("help")
 
 # 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
@@ -35,6 +32,8 @@ bot.add_cog(music(bot))
 async def on_ready(): 
     # await bot.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='NewJeans', url='https://www.youtube.com/watch?v=ft70sAYrFyY&ab_channel=HYBELABELS'))
     print("bot has connected to the server!")
+    await bot.add_cog(music_cog(bot))
+    await bot.add_cog(help_cog(bot))
 
 @bot.command()
 async def hello(ctx):
