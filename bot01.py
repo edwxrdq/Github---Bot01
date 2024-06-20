@@ -5,8 +5,6 @@ from discord import FFmpegPCMAudio
 from os import getenv
 #dotenv = essentially invisible file that stores the info, so it's not committed
 from dotenv import load_dotenv
-load_dotenv()
-DISCORD_TOKEN = getenv('BOTKEY')
 from discord import Member
 from discord.ext.commands import has_permissions, MissingPermissions
 from discord.utils import get
@@ -16,8 +14,11 @@ import json
 from music import music_cog
 from help import help_cog
 # from cogs import setup
-import youtube_dl
+import yt_dlp as youtube_dl
 import nacl
+
+load_dotenv()
+DISCORD_TOKEN = getenv('BOTKEY')
 
 bot = commands.Bot(command_prefix = '!', intents=discord.Intents.all()) 
 intents = discord.Intents.default()
@@ -32,7 +33,7 @@ bot.remove_command("help")
 async def on_ready(): 
     # await bot.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='NewJeans', url='https://www.youtube.com/watch?v=ft70sAYrFyY&ab_channel=HYBELABELS'))
     print("bot has connected to the server!")
-    # await bot.add_cog(music_cog(bot))
+    await bot.add_cog(music_cog(bot))
     await bot.add_cog(help_cog(bot))
 
 @bot.command()
@@ -126,14 +127,14 @@ async def unban_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("you don't have permission to unban people.")
 
-@bot.command()
-async def embed(ctx):
-    embed = discord.Embed(title="dog", url="http://google.com", description="we love dogs", color=0x967bb6)
-    embed.set_author(name=ctx.author.display_name, url="http://google.com")
-    embed.add_field(name="shorkie", value="nico", inline=False)
-    embed.add_field(name="shorkie", value="chewy", inline=False)
-    embed.set_footer(text="thank you for reading")
-    await ctx.send(embed=embed)
+# @bot.command()
+# async def embed(ctx):
+#     embed = discord.Embed(title="dog", url="http://google.com", description="we love dogs", color=0x967bb6)
+#     embed.set_author(name=ctx.author.display_name, url="http://google.com")
+#     embed.add_field(name="shorkie", value="nico", inline=False)
+#     embed.add_field(name="shorkie", value="chewy", inline=False)
+#     embed.set_footer(text="thank you for reading")
+#     await ctx.send(embed=embed)
 
 @bot.command()
 async def message(ctx, user:discord.Member, *, message=None):
@@ -183,6 +184,17 @@ async def removeRole(ctx, user : discord.Member, *, role : discord.Role):
 async def removeRole_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         await ctx.send("you don't have permissions to add roles.")
+
+@bot.command()
+async def open(ctx, arg1, arg2):
+    message = arg1
+    message2 = arg2
+    embed = discord.Embed(title="dog", url="http://google.com", description=message, color=5763719)
+    # embed.set_author(name=ctx.author.display_name, url="http://google.com")
+    # embed.add_field(name="shorkie", value="nico"  , inline=False)
+    # embed.add_field(name="shorkie", value="chewy", inline=False)
+    embed.set_footer(text=message2)
+    await ctx.send(embed=embed)
 
 
 # bot.load_extension(f"cogs.{music}")
