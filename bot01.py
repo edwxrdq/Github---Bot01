@@ -186,16 +186,28 @@ async def removeRole_error(ctx, error):
         await ctx.send("you don't have permissions to add roles.")
 
 @bot.command()
-async def open(ctx, arg1, arg2):
-    message = arg1
-    message2 = arg2
-    embed = discord.Embed(title="dog", url="http://google.com", description=message, color=5763719)
-    # embed.set_author(name=ctx.author.display_name, url="http://google.com")
-    # embed.add_field(name="shorkie", value="nico"  , inline=False)
-    # embed.add_field(name="shorkie", value="chewy", inline=False)
-    embed.set_footer(text=message2)
+async def open(ctx, *, arg):
+    message = arg
+    embed = discord.Embed(title="Options Entry", description=message, color=5763719)
+    embed.set_footer(text="nfa, documentation purposes only")
+    await ctx.message.delete()
     await ctx.send(embed=embed)
 
+@bot.command()
+async def scale(ctx, *, arg):
+    message = arg
+    embed = discord.Embed(title="Options Entry", description=message, color=16776960)
+    embed.set_footer(text="nfa, documentation purposes only")
+    await ctx.message.delete()
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def close(ctx, *, arg):
+    message = arg
+    embed = discord.Embed(title="Options Entry", description=message, color=16711680)
+    embed.set_footer(text="nfa, documentation purposes only")
+    await ctx.message.delete()
+    await ctx.send(embed=embed)
 
 # bot.load_extension(f"cogs.{music}")
 
