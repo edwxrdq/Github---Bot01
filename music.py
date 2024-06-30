@@ -119,8 +119,8 @@ class music_cog(commands.Cog):
         self.music_queue = []
         await ctx.send('music queue cleared.')
 
-    @commands.command(name="leave", aliases=["d", "disconnect"], help="kicks the bot from the voice channel")
-    async def leave(self, ctx):
-        self.is_playing = False
-        self.is_paused = True
-        await self.vc.disconnect()
+    # @commands.command(name="d", aliases=["d", "disconnect"], help="kicks the bot from the voice channel")
+    # async def dc(self, ctx):
+    #     self.is_playing = False
+    #     self.is_paused = True
+    #     await self.vc.disconnect()

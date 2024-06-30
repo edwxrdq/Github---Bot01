@@ -8,15 +8,32 @@ class help_cog(commands.Cog):
 ```
 General commands:
 !help - displays all available commands
-!p - finds the song on youtube and plays it in the current channel
-!q - displays the current music queue
-!skip - skips the current song being played
-!clear - stops the music and clears the queue
-!leave - disconnects the bot from the voice channel
-!pause - pauses the current song being played od results if already paused
-!resume - resumes playing the current song
+!hello - well wishes for the day
+!goodbye - temporary farewell for the next
+!join - bot joins voice channel
+!leave - bot leaves voice channel
+
+Admin commands:
+!kick - kicks member from server
+!ban - bans member from server
+!unban - unbans member from server
+!addRole - adds member to a role (@user + role)
+!removeRole - removes member to a role (@user + role)
+
+Options commands (nfa):
+!open - notifies members of newly opened options contracts
+!scale - notifies members of trimmed contracts
+!close - notifies members of closed options contracts 
 ```
 """
+
+# !p - finds the song on youtube and plays it in the current channel
+# !q - displays the current music queue
+# !skip - skips the current song being played
+# !clear - stops the music and clears the queue
+# !leave - disconnects the bot from the voice channel
+# !pause - pauses the current song being played od results if already paused
+# !resume - resumes playing the current song
 
         self.text_channel_text = []
     

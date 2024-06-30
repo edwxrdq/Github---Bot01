@@ -65,7 +65,7 @@ async def join(ctx):
         await ctx.send("you must be in a voice channel to run this command.")
 
 @bot.command(pass_context = True)
-async def dc(ctx):
+async def leave(ctx):
     if (ctx.voice_client):
         await ctx.guild.voice_client.disconnect()
         await ctx.send("i've left the voice channel.")
@@ -136,11 +136,11 @@ async def unban_error(ctx, error):
 #     embed.set_footer(text="thank you for reading")
 #     await ctx.send(embed=embed)
 
-@bot.command()
-async def message(ctx, user:discord.Member, *, message=None):
-    message = "welcome to the server!"
-    embed = discord.Embed(title=message)
-    await user.send(embed=embed)
+# @bot.command()
+# async def message(ctx, user:discord.Member, *, message=None):
+#     message = "welcome to the server!"
+#     embed = discord.Embed(title=message)
+#     await user.send(embed=embed)
 
 # @bot.event
 # async def on_member_remove(member):
